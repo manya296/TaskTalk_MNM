@@ -1,15 +1,18 @@
-import ChatWindow from "./components/ChatWindow";
-import OrdersDashboard from "./components/OrdersDashboard";
+import { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import ChatPanel from "./components/ChatPanel";
+import Dashboard from "./components/Dashboard";
 
 function App() {
-  const refresh = () => window.location.reload();
+  const [page, setPage] = useState("chat");
 
   return (
-    <div className="container">
-      <h1>ChatFlow 🚀</h1>
+    <div className="app">
+      <Sidebar setPage={setPage} />
 
-      <ChatWindow refreshOrders={refresh} />
-      <OrdersDashboard />
+      <div className="main">
+        {page === "chat" ? <ChatPanel /> : <Dashboard />}
+      </div>
     </div>
   );
 }

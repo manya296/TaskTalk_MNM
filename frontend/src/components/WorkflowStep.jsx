@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { getTasks, completeTask } from "../services/api";
+import axios from "axios";
 
-const TaskList = ({ orderId }) => {
+const WorkflowStep = ({ orderId }) => {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = async () => {
-    const res = await getTasks(orderId);
+    const res = await axios.get(
+      `http://localhost:5000/api/tasks/${orderId}`
+    );
     setTasks(res.data);
   };
 
@@ -14,17 +16,23 @@ const TaskList = ({ orderId }) => {
   }, [orderId]);
 
   const handleComplete = async (taskOrder) => {
-    await completeTask({ orderId, taskOrder });
-    fetchTasks();
+    await axios.post("http://localhost:5000/api/tasks/complete", {
+      orderId,
+      taskOrder
+    });
+
+    fetchTasks(); // refresh
   };
 
   return (
-    <div className="card">
-      <h4>Tasks for {orderId}</h4>
+    <div>
+      <h3>Workflow for {orderId}</h3>
 
       {tasks.map(task => (
-        <div key={task.taskOrder}>
-          {task.taskName} - {task.status}
+        <div key={task.taskOrder} className="task">
+          <span>
+            {task.taskName} - {task.status}
+          </span>
 
           {task.status !== "completed" && (
             <button onClick={() => handleComplete(task.taskOrder)}>
@@ -37,4 +45,4 @@ const TaskList = ({ orderId }) => {
   );
 };
 
-export default TaskList;
+export default WorkflowStep;
