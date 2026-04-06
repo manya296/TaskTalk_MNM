@@ -6,6 +6,8 @@ const connectDB = require("./config/db");
 
 const orderRoutes = require("./routes/orders");
 const taskRoutes = require("./routes/tasks");
+const chatRoutes = require("./routes/chat");
+
 
 const app = express();
 app.use(cors());
@@ -15,6 +17,7 @@ connectDB();
 
 app.use("/api/orders", orderRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.get("/", (req, res) => {
     res.send("ChatFlow Backend Running");
