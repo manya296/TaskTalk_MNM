@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const STATUS = {
+  COMPLETED: "completed",
+  PENDING: "pending"
+};
+
 const WorkflowStep = ({ orderId }) => {
   const [tasks, setTasks] = useState([]);
 
@@ -34,7 +39,7 @@ const WorkflowStep = ({ orderId }) => {
             {task.taskName} - {task.status}
           </span>
 
-          {task.status !== "completed" && (
+          {task.status !== status.COMPLETED && (
             <button onClick={() => handleComplete(task.taskOrder)}>
               Complete
             </button>
