@@ -1,6 +1,6 @@
 const { extractOrderData } = require("../services/rulebasedNLP");
-const Order = require("../models/orderModel");
-const Task = require("../models/taskModel");
+const Order = require("../models/Order");
+const Task = require("../models/Task");
 
 // 🔹 Helper: Create workflow tasks
 const createWorkflowTasks = async (orderId) => {
